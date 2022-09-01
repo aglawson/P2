@@ -6,10 +6,8 @@ import "./Percentages.sol";
 import "../node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "../node_modules/openzeppelin-contracts/token/ERC20/IERC20.sol";
 
-// 0x0A77230d17318075983913bC2145DB16C7366156 -- AVAX
-
 /*
-*   TO-DO: Add support for ERC20
+*   TO-DO: Add ability to add friends
 */
 
 contract P2 is Ownable, ReentrancyGuard, Percentages{
