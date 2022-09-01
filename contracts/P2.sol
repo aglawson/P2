@@ -141,7 +141,7 @@ contract P2 is Ownable, ReentrancyGuard, Percentages{
         tokenMapping[ticker] = Token(ticker, tokenAddress);
     }
 
-    function ownerWithdraw(string memory ticker) external onlyOwner {
+    // function ownerWithdraw(string memory ticker) external onlyOwner {
 
-    }
+    // }
 }
