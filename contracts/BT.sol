@@ -14,6 +14,7 @@ contract BT is ReentrancyGuard, Percentages, TokenManager{
     event sent(string toUsername, string fromUsername, string ticker, uint256 amount, string memo);
     event funded(string username, address wallet, uint256 amount, uint256 oldBalance, uint256 newBalance);
     event withdrawal(string username, address wallet, uint256 amount, uint256 oldBalance, uint256 newBalance, uint256 fee);
+    event accountCreated(string username, address walletAddress);
 
     struct Account {
         string username;
@@ -41,14 +42,21 @@ contract BT is ReentrancyGuard, Percentages, TokenManager{
         _;
     }
 
+    modifier isNotZero(uint256 value) {
+        require(value > 0, "Amount cannot be zero");
+        _;
+    }
+
     function createAccount(string memory _username) external isNotInitialized(_username) nonReentrant {
         require(!accounts[_msgSender()].hasAccount, "Account already exists for this wallet");
         accounts[_msgSender()].username = _username;
         accounts[_msgSender()].hasAccount = true;
         usernameToAddress[_username] = _msgSender();
+
+        emit accountCreated(_username, _msgSender());
     }
 
-    function depositETH() external payable nonReentrant {
+    function depositETH() external payable nonReentrant isNotZero(msg.value) {
         require(accounts[_msgSender()].hasAccount, "Sender has not created an account");
 
         uint256 oldBalance = tokenBalances[_msgSender()]["ETH"];
@@ -58,13 +66,13 @@ contract BT is ReentrancyGuard, Percentages, TokenManager{
         emit funded(accounts[_msgSender()].username, _msgSender(), msg.value, oldBalance, tokenBalances[_msgSender()]["ETH"]);
     }
 
-    function depositERC20(string memory ticker, uint256 amount) external tokenExists(ticker){
+    function depositERC20(string memory ticker, uint256 amount) external tokenExists(ticker) isNotZero(amount) {
         IERC20(tokenMapping[ticker].tokenAddress).transferFrom(msg.sender, address(this), amount);
 
         tokenBalances[_msgSender()][ticker] += amount;
     }
 
-    function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) {
+    function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) isNotZero(amount) {
         require(tokenBalances[_msgSender()][ticker] >= amount, "Insufficient balance");
         tokenBalances[_msgSender()][ticker] -= amount;
 
@@ -73,7 +81,7 @@ contract BT is ReentrancyGuard, Percentages, TokenManager{
         emit sent(_toUsername, accounts[_msgSender()].username, ticker, amount, memo);
     }
 
-    function withdrawFunds(string memory ticker, uint256 _amount) external nonReentrant {
+    function withdrawFunds(string memory ticker, uint256 _amount) external nonReentrant isNotZero(_amount){
         uint256 amount = _amount;
         require(tokenBalances[_msgSender()][ticker] >= amount, "Insufficient balance");
 
