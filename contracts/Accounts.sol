@@ -68,8 +68,10 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
 
     function depositERC20(string memory ticker, uint256 amount) external tokenExists(ticker) isNotZero(amount) {
         IERC20(tokenMapping[ticker].tokenAddress).transferFrom(msg.sender, address(this), amount);
-
+        uint256 oldBalance = tokenBalances[_msgSender()][ticker];
         tokenBalances[_msgSender()][ticker] += amount;
+        
+        emit funded(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker]);
     }
 
     function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) isNotZero(amount) {

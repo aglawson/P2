@@ -4,6 +4,7 @@ const {
 } = require("@nomicfoundation/hardhat-network-helpers");
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
 
 describe("P2", function () {
   this.beforeAll(async function() {
@@ -16,6 +17,9 @@ describe("P2", function () {
 
     this.P2 = await ethers.getContractFactory("P2");
     this.p2 = await this.P2.deploy();
+
+    this.TestToken = await ethers.getContractFactory("TestToken");
+    this.tt = await this.TestToken.deploy();
 
   });
 
@@ -67,6 +71,19 @@ describe("P2", function () {
 
     it('user can remove friends', async function () {
       expect(await this.p2.connect(this.addr2)['removeFriend(string)']('second')).to.emit('friendRemoved');
+    });
+  });
+
+  describe("ERC20 Functionality", async function () {
+    it('owner can add ERC20 token', async function () {
+      expect(await this.p2.connect(this.owner)['addToken(string,address)']('TEST', this.tt.address)).to.emit('tokenAdded');
+    });
+
+    it('user can deposit ERC20 token', async function () {
+      await this.p2.connect(this.owner).createAccount('OWNER');
+      await this.tt.connect(this.owner).approve(this.p2.address, '1000000000000000000000000000');
+      expect(await this.p2.connect(this.owner)['depositERC20(string,uint256)']('TEST', '10000000000000000000')).to.emit('funded');
+      expect(await this.p2.tokenBalance('TEST', 'OWNER')).to.equal('10000000000000000000');
     });
   });
  

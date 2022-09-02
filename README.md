@@ -12,19 +12,22 @@ P2 is more user friendly than just using the base layer of ETH to move value, be
 
 ## Latest Test Results
 ```
-    Deployment
-      ✔ initializes ETH token at deployment (38ms)
+       Deployment
+      ✔ initializes ETH token at deployment (50ms)
     Account Functionality
-      ✔ can create new accounts (60ms)
-      ✔ users can add friends (83ms)
-      ✔ can deposit funds (67ms)
-      ✔ can request funds from friends (57ms)
-      ✔ can fulfill requests (68ms)
-      ✔ can send funds (54ms)
-      ✔ user can withdraw funds (82ms)
+      ✔ can create new accounts (96ms)
+      ✔ users can add friends (47ms)
+      ✔ can deposit funds (42ms)
+      ✔ can request funds from friends (48ms)
+      ✔ can fulfill requests (63ms)
+      ✔ can send funds (88ms)
+      ✔ user can withdraw funds (84ms)
       ✔ user can remove friends
+    ERC20 Functionality
+      ✔ owner can add ERC20 token (38ms)
+      ✔ user can deposit ERC20 token (101ms)
 
 
-  9 passing (2s)
+  11 passing (2s)
 
 ```
