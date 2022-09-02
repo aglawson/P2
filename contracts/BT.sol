@@ -64,7 +64,7 @@ contract BT is ReentrancyGuard, Percentages, TokenManager{
         tokenBalances[_msgSender()][ticker] += amount;
     }
 
-    function sendERC20(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) {
+    function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) {
         require(tokenBalances[_msgSender()][ticker] >= amount, "Insufficient balance");
         tokenBalances[_msgSender()][ticker] -= amount;
 
@@ -73,48 +73,26 @@ contract BT is ReentrancyGuard, Percentages, TokenManager{
         emit sent(_toUsername, accounts[_msgSender()].username, ticker, amount, memo);
     }
 
-    function sendETH(string calldata _toUsername, uint256 amount, string calldata memo) external isInitialized(_toUsername) nonReentrant {
-        require(tokenBalances[_msgSender()]["ETH"] >= amount, "Insufficient balance");
-        tokenBalances[_msgSender()]["ETH"] -= amount;
-        tokenBalances[usernameToAddress[_toUsername]]["ETH"] += amount;
-
-        emit sent(_toUsername, accounts[_msgSender()].username, "ETH", amount, memo);
-    }
-
-    function withdrawETH(uint256 _amount, bool withdrawAll) external nonReentrant {
+    function withdrawFunds(string memory ticker, uint256 _amount) external nonReentrant {
         uint256 amount = _amount;
-        if(withdrawAll) {
-            amount = tokenBalances[_msgSender()]["ETH"];
-        }
-
-        require(tokenBalances[_msgSender()]["ETH"] >= amount, "Insufficient balance");
-
-        uint256 oldBalance = tokenBalances[_msgSender()]["ETH"];
-        tokenBalances[_msgSender()]["ETH"] -= amount;
-
-        uint256 fee = percentageOf(amount, 1) / 4; // 0.25% 
-    
-        (bool success,) = payable(_msgSender()).call{value: amount - fee}("");
-        require(success, 'Transfer fail');
-
-        (bool success2,) = payable(owner()).call{value: fee}("");
-        require(success2, 'Transfer fail');
-
-        emit withdrawal(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()]["ETH"], fee);
-    }
-
-    function withdrawERC20(uint256 amount, string memory ticker) external nonReentrant tokenExists(ticker) {
         require(tokenBalances[_msgSender()][ticker] >= amount, "Insufficient balance");
 
         uint256 oldBalance = tokenBalances[_msgSender()][ticker];
         tokenBalances[_msgSender()][ticker] -= amount;
 
         uint256 fee = percentageOf(amount, 1) / 4; // 0.25% 
-    
-        IERC20(tokenMapping[ticker].tokenAddress).transferFrom(address(this), _msgSender(), amount - fee);
-        IERC20(tokenMapping[ticker].tokenAddress).transferFrom(address(this), owner(), fee);
-        //accounts[owner()].tokenBalances[ticker] += fee;
 
+        if(tokenMapping[ticker].tokenAddress == 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE) {
+            (bool success,) = payable(_msgSender()).call{value: amount - fee}("");
+            require(success, 'Transfer fail');
+
+            (bool success2,) = payable(owner()).call{value: fee}("");
+            require(success2, 'Transfer fail');
+        } else {
+            IERC20(tokenMapping[ticker].tokenAddress).transferFrom(address(this), _msgSender(), amount - fee);
+            IERC20(tokenMapping[ticker].tokenAddress).transferFrom(address(this), owner(), fee);
+        }
+        
         emit withdrawal(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker], fee);
     }
 
