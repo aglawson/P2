@@ -9,7 +9,7 @@ import "../node_modules/openzeppelin-contracts/token/ERC20/IERC20.sol";
 /*
 *   TO-DO: Vigorous testing
 */
-contract BT is ReentrancyGuard, Percentages, TokenManager{
+contract Accounts is ReentrancyGuard, Percentages, TokenManager{
 
     event sent(string toUsername, string fromUsername, string ticker, uint256 amount, string memo);
     event funded(string username, address wallet, uint256 amount, uint256 oldBalance, uint256 newBalance);

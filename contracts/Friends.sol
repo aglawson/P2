@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-import "./BT.sol";
+import "./Accounts.sol";
 
-contract Friends is BT {
-
+contract Friends is Accounts {
     event friendAdded(string username, string newFriend);
     event friendRemoved(string username, string exFriend);
     event requestSent(uint256 reqId, string requester, string requestRecipient, string ticker, uint256 amount, string reason);
