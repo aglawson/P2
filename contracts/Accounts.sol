@@ -74,7 +74,7 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
         emit funded(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker]);
     }
 
-    function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) isNotZero(amount) {
+    function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) isNotZero(amount) isInitialized(_toUsername) {
         require(tokenBalances[_msgSender()][ticker] >= amount, "Insufficient balance");
         tokenBalances[_msgSender()][ticker] -= amount;
 

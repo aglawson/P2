@@ -99,7 +99,20 @@ describe("P2", function () {
 
     it('only friends can request money', async function () {
       await expect(this.p2.connect(this.addr5)['requestFunds(string,string,uint256,string)']('OWNER', 'ETH', '1000000000', 'PLZ')).to.be.revertedWith('Can only request from friends');
-    }); 
+    });
+
+    it('does not allow duplicate usernames', async function () {
+      await expect(this.p2.connect(this.addr4)['createAccount(string)']('OWNER')).to.be.revertedWith('Username already claimed');
+    });
+
+    it('does not allow same wallet to make multiple accounts', async function () {
+      await expect(this.p2.connect(this.owner)['createAccount(string)']('OtherAccount')).to.be.revertedWith('Account already exists for this wallet');
+    });
+
+    it('does not allow funds to be sent to non existent user', async function () {
+      await this.p2.connect(this.owner).depositETH({value:'1000000000000000000'});
+      await expect(this.p2.connect(this.owner)['sendFunds(string,string,uint256,string)']('bobby', 'ETH', '10000000000', 'hello')).to.be.revertedWith('Username has no associated address');
+    });
   });
  
 });
