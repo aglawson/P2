@@ -54,6 +54,7 @@ contract Friends is Accounts {
         require(!reqs[reqId].fulfilled, "Already fulfilled");
         require(tokenBalances[_msgSender()][reqs[reqId].ticker] >= reqs[reqId].amount, "Insufficient balance");
         require(reqs[reqId].requestRecipient == _msgSender(), "Sender is not request recipient");
+        require(!reqs[reqId].rejected, "Request has been rejected and cannot be fulfilled");
 
         reqs[reqId].fulfilled = true;
 

@@ -13,28 +13,31 @@ P2 is more user friendly than just using the base layer of ETH to move value, be
 ## Latest Test Results
 ```
     Deployment
-      ✔ initializes ETH token at deployment
+      ✔ initializes ETH token at deployment (42ms)
     Account Functionality
-      ✔ can create new accounts (49ms)
-      ✔ users can add friends (39ms)
-      ✔ can deposit funds (52ms)
-      ✔ can request funds from friends (60ms)
-      ✔ can fulfill requests (61ms)
-      ✔ can send funds (78ms)
-      ✔ user can withdraw funds (62ms)
+      ✔ can create new accounts (59ms)
+      ✔ users can add friends (47ms)
+      ✔ can deposit funds
+      ✔ can request funds from friends (46ms)
+      ✔ can fulfill requests (62ms)
+      ✔ user can reject request (60ms)
+      ✔ can send funds (83ms)
+      ✔ user can withdraw funds (84ms)
       ✔ user can remove friends
     ERC20 Functionality
       ✔ owner can add ERC20 token
-      ✔ user can deposit ERC20 token (79ms)
-      ✔ user can withdraw ERC20 (48ms)
+      ✔ user can deposit ERC20 token (96ms)
+      ✔ user can withdraw ERC20 (64ms)
     Security
-      ✔ only owner can add tokens (52ms)
+      ✔ only owner can add tokens (46ms)
       ✔ only friends can request money
       ✔ does not allow duplicate usernames
       ✔ does not allow same wallet to make multiple accounts
-      ✔ does not allow funds to be sent to non existent user
+      ✔ does not allow funds to be sent to non existent user (38ms)
+      ✔ does not allow users to fulfill requests not sent to them (76ms)
+      ✔ does not allow a rejected request to be fulfilled (52ms)
 
 
-  17 passing (2s)
+  20 passing (2s)
 
 ```

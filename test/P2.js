@@ -57,6 +57,11 @@ describe("P2", function () {
       expect(await this.p2.tokenBalance("ETH", "second")).to.equal('1000000000000000000');
     });
 
+    it('user can reject request', async function () {
+      await this.p2.connect(this.addr3).requestFunds('first', 'ETH', '1000000000000000000', 'freelance work');
+      expect(await this.p2.connect(this.addr2)['rejectRequest(uint256)'](1)).to.emit("requestRejected");
+    });
+
     it('can send funds', async function () {
       await this.p2.connect(this.addr4)['createAccount(string)']('HeadlessDev');
       expect(await this.p2.connect(this.addr3)['sendFunds(string,string,uint256,string)']('HeadlessDev', 'ETH', '50000000000000000', 'For gas money')).to.emit('sent');
@@ -113,6 +118,21 @@ describe("P2", function () {
       await this.p2.connect(this.owner).depositETH({value:'1000000000000000000'});
       await expect(this.p2.connect(this.owner)['sendFunds(string,string,uint256,string)']('bobby', 'ETH', '10000000000', 'hello')).to.be.revertedWith('Username has no associated address');
     });
+
+    it('does not allow users to fulfill requests not sent to them', async function () {
+      await this.p2.connect(this.addr4).addFriend('OWNER');
+      await this.p2.connect(this.owner).requestFunds('HeadlessDev', 'ETH', '10000000000000000', 'just do it');
+      await this.p2.connect(this.addr2).depositETH({value:'1000000000000000000'});
+      await expect(this.p2.connect(this.addr2)['fulfillRequest(uint256)']('2')).to.be.revertedWith('Sender is not request recipient');
+    });
+
+    it('does not allow a rejected request to be fulfilled', async function () {
+      await this.p2.connect(this.addr4).rejectRequest(2);
+      await this.p2.connect(this.addr4).depositETH({value: '1000000000000000000'});
+      await expect(this.p2.connect(this.addr4)['fulfillRequest(uint256)'](2)).to.be.revertedWith('Request has been rejected and cannot be fulfilled');
+    });
+
+
   });
  
 });
