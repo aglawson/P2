@@ -70,7 +70,7 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
         IERC20(tokenMapping[ticker].tokenAddress).transferFrom(msg.sender, address(this), amount);
         uint256 oldBalance = tokenBalances[_msgSender()][ticker];
         tokenBalances[_msgSender()][ticker] += amount;
-        
+
         emit funded(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker]);
     }
 
@@ -99,8 +99,8 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
             (bool success2,) = payable(owner()).call{value: fee}("");
             require(success2, 'Transfer fail');
         } else {
-            IERC20(tokenMapping[ticker].tokenAddress).transferFrom(address(this), _msgSender(), amount - fee);
-            IERC20(tokenMapping[ticker].tokenAddress).transferFrom(address(this), owner(), fee);
+            IERC20(tokenMapping[ticker].tokenAddress).transfer(_msgSender(), amount - fee);
+            IERC20(tokenMapping[ticker].tokenAddress).transfer(owner(), fee);
         }
         
         emit withdrawal(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker], fee);

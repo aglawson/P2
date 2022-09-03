@@ -85,6 +85,21 @@ describe("P2", function () {
       expect(await this.p2.connect(this.owner)['depositERC20(string,uint256)']('TEST', '10000000000000000000')).to.emit('funded');
       expect(await this.p2.tokenBalance('TEST', 'OWNER')).to.equal('10000000000000000000');
     });
+
+    it('user can withdraw ERC20', async function () {
+      expect(await this.p2.connect(this.owner)['withdrawFunds(string,uint256)']('TEST', '10000000000000000000')).to.emit('withdrawal');
+      expect(await this.p2.tokenBalance('TEST', 'OWNER')).to.equal('0');
+    });
+  });
+
+  describe("Security", async function () {
+    it('only owner can add tokens', async function () {
+      await expect(this.p2.connect(this.addr2)['addToken(string,address)']('FAIL', '0x0000000000000000000000000000000000001010')).to.be.revertedWith('Ownable: caller is not the owner');
+    });
+
+    it('only friends can request money', async function () {
+      await expect(this.p2.connect(this.addr5)['requestFunds(string,string,uint256,string)']('OWNER', 'ETH', '1000000000', 'PLZ')).to.be.revertedWith('Can only request from friends');
+    }); 
   });
  
 });
