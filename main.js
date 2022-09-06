@@ -3,6 +3,7 @@ let signer;
 const contractAddress = '0xce6b410e8988AB85672e88E7e7cA4EC622980075';
 const contract = new ethers.Contract(contractAddress, abi, provider);
 hide('ca');
+hide('accountInfo');
 
 init = async function () {
     // hide('buy');
