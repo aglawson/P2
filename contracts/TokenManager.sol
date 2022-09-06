@@ -9,6 +9,7 @@ contract TokenManager is Ownable {
     struct Token {
         string ticker;
         address tokenAddress;
+        bool exempt;
     }
     mapping(string => Token) public tokenMapping;
 
@@ -23,7 +24,11 @@ contract TokenManager is Ownable {
     }
 
     function addToken(string memory ticker, address tokenAddress) public onlyOwner tokenDoesNotExist(ticker) {
-        tokenMapping[ticker] = Token(ticker, tokenAddress);
+        tokenMapping[ticker] = Token(ticker, tokenAddress, false);
         emit tokenAdded(ticker, tokenAddress);
+    }
+
+    function exemptToken(string memory ticker, bool _exempt) external onlyOwner tokenExists(ticker) {
+        tokenMapping[ticker].exempt = _exempt;
     }
 }

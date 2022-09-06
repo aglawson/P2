@@ -74,7 +74,7 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
         emit funded(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker]);
     }
 
-    function sendFunds(string calldata _toUsername, string calldata ticker, uint256 amount, string calldata memo) external tokenExists(ticker) isNotZero(amount) isInitialized(_toUsername) {
+    function sendFunds(string memory _toUsername, string memory ticker, uint256 amount, string memory memo) public tokenExists(ticker) isNotZero(amount) isInitialized(_toUsername) {
         require(tokenBalances[_msgSender()][ticker] >= amount, "Insufficient balance");
         tokenBalances[_msgSender()][ticker] -= amount;
 
@@ -99,8 +99,12 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
             (bool success2,) = payable(owner()).call{value: fee}("");
             require(success2, 'Transfer fail');
         } else {
-            IERC20(tokenMapping[ticker].tokenAddress).transfer(_msgSender(), amount - fee);
-            IERC20(tokenMapping[ticker].tokenAddress).transfer(owner(), fee);
+            if(tokenMapping[ticker].exempt) {
+                IERC20(tokenMapping[ticker].tokenAddress).transfer(_msgSender(), amount);
+            } else {
+                IERC20(tokenMapping[ticker].tokenAddress).transfer(_msgSender(), amount - fee);
+                IERC20(tokenMapping[ticker].tokenAddress).transfer(owner(), fee);
+            }
         }
         
         emit withdrawal(accounts[_msgSender()].username, _msgSender(), amount, oldBalance, tokenBalances[_msgSender()][ticker], fee);
