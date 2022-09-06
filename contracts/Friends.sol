@@ -74,6 +74,7 @@ contract Friends is Accounts {
     function rejectRequest(uint256 reqId) external {
         require(!reqs[reqId].fulfilled, "Already fulfilled");
         require(reqs[reqId].requestRecipient == _msgSender(), "Sender is not request recipient");
+        require(!reqs[reqId].rejected, "Already rejected");
 
         reqs[reqId].rejected = true;
         emit requestRejected(reqId);

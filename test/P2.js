@@ -132,7 +132,11 @@ describe("P2", function () {
       await expect(this.p2.connect(this.addr4)['fulfillRequest(uint256)'](2)).to.be.revertedWith('Request has been rejected and cannot be fulfilled');
     });
 
-
+    it('does not allow a user to reject a request not sent to them', async function () {
+      await this.p2.connect(this.addr4).addFriend('OWNER');
+      await this.p2.connect(this.owner).requestFunds('HeadlessDev', 'ETH', '10000000000000000', 'again again');
+      await expect(this.p2.connect(this.addr2)['rejectRequest(uint256)'](2)).to.be.revertedWith('Sender is not request recipient');
+    });
   });
  
 });
