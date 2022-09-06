@@ -6,6 +6,8 @@ hide('ca');
 hide('accountInfo');
 
 init = async function () {
+    hide('accountInfo');
+
     // hide('buy');
     // hide('sell');
     await provider.send("eth_requestAccounts", []);
