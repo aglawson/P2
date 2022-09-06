@@ -60,9 +60,6 @@ contract Friends is Accounts {
 
         sendFunds(accounts[reqs[reqId].requestSender].username, reqs[reqId].ticker, reqs[reqId].amount, "");
 
-        // tokenBalances[reqs[reqId].requestSender][reqs[reqId].ticker] += reqs[reqId].amount;
-        // tokenBalances[_msgSender()][reqs[reqId].ticker] -= reqs[reqId].amount;
-
         emit requestFulfilled
         (
             reqId,
