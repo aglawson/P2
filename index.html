@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <title>P2</title>
+    <button id="connect" style="margin-top:0%; margin-left:90%;" onclick="init()">Connect Wallet</button>
+
+    <h1 style="margin-top: -1.6%;">P2</h1>
+    <a href="https://github.com/aglawson/P2" target="_blank"><button>Source Code</button></a>
+
+  </head>
+<body>
+
+    <div id="accountInfo">
+
+    </div>
+
+    <div id="ca">
+     <input type="text" id="username" placeholder="MyUsername">
+     <button id="createAccount" onclick="createAccount()">Create Account</button>
+    </div>
+
+    <div id="deposit">
+        <input type="text" id="ticker" placeholder="ticker">
+        <input type="number" id="amount" placeholder="amount">
+        <button id="depositFunds" onclick="deposit()">Deposit</button>
+        <button id="depositFunds" onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <div id="send">
+        <input type="text" id="tickerr" placeholder="ticker">
+        <input type="text" id="toUsername" placeholder="To Username">
+        <input type="number" id="amountt" placeholder="amount">
+        <input type="text" id="memo" placeholder="Memo">
+        <button id="depositFunds" onclick="sendFunds()">Send Funds</button>
+    </div>
+
+    <script src="./abi.js"></script>
+    <script src="./main.js"></script>
+
+</body>
+
+</html>
