@@ -1,7 +1,9 @@
 # P2
-
 P2 is a web3 version of a peer to peer payment platform (think venmo, zelle, etc).
 P2 is more user friendly than just using the base layer of ETH to move value, because it relies on usernames rather than unreadable wallet addresses. 
+
+# Frontend
+https://aglawson.github.io/P2/
 
 ## In the works
 1. Add ERC20 tokens **done**
