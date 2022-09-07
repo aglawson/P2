@@ -13,8 +13,8 @@
   </head>
 <body>
 
-    <div id="accountInfo">
-
+    <h2 id="un"></h2>
+    <div id="balance">
     </div>
 
     <div id="ca">
@@ -23,18 +23,36 @@
     </div>
 
     <div id="deposit">
+        <h2>Deposit & Withdraw</h2>
         <input type="text" id="ticker" placeholder="ticker">
         <input type="number" id="amount" placeholder="amount">
         <button id="depositFunds" onclick="deposit()">Deposit</button>
-        <button id="depositFunds" onclick="withdraw()">Withdraw</button>
+        <button id="withdraw" onclick="withdraw()">Withdraw</button>
     </div>
 
     <div id="send">
+        <h2>Send Funds</h2>
         <input type="text" id="tickerr" placeholder="ticker">
         <input type="text" id="toUsername" placeholder="To Username">
         <input type="number" id="amountt" placeholder="amount">
         <input type="text" id="memo" placeholder="Memo">
         <button id="depositFunds" onclick="sendFunds()">Send Funds</button>
+    </div>
+
+    <div id="friends">
+        <h2>Friends</h2>
+
+        <input type="text" placeholder="Username" id="reqUsername">
+        <button id="addFriend" onclick="addFriend()">Add Friend</button>
+        <br/>
+        <input type="text" id="reqTicker" placeholder="Ticker">
+        <input type="number" id="reqAmount" placeholder="Amount">
+        <input type="text" id="reqReason" placeholder="Reason for Request">
+        <button id="sendReq" onclick="requestFunds()">Request Funds</button>
+        <br/>
+        <input type="number" id="reqId" placeholder="Request ID">
+        <button id="fulfillReq" onclick="fulfillRequest()">Fulfill Request</button>
+        <button id="rejectReq" onclick="rejectRequest()">Reject Request</button>
     </div>
 
     <script src="./abi.js"></script>
