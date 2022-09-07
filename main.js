@@ -19,11 +19,13 @@ init = async function () {
     let username = await contract.accounts(await signer.getAddress());
     let balance = await contract.tokenBalance('ETH', username.username);
 
+
     if(username.hasAccount){
         //unhide('accountInfo');
         document.getElementById('connect').innerHTML = username.username;
         document.getElementById('un').innerHTML = username.username;
         document.getElementById('balance').innerHTML = 'ETH Balance: ' + balance / 10**18;
+        document.getElementById('requests').innerHTML = await getPendingRequests();
         unhide('deposit');
         if(balance != 0) {
             unhide('send');
@@ -149,6 +151,47 @@ rejectRequest = async function () {
     } catch(error) {
         alert(error.error.message);
     }
+}
+
+getPendingRequests = async function () {
+    let reqIds = [];
+    let count = 0;
+    while(true) {
+        try{
+            let req = await contract.reqMapping(await signer.getAddress(), 1, count);
+            reqIds.push(parseInt(req._hex));
+            count++;
+        } catch {
+            break;
+        }
+    }
+    console.log(reqIds);
+
+    let result = [];
+
+    for(let i = 0; i < reqIds.length; i++) {
+        let req = await contract.reqs(reqIds[i]);
+        if(req.rejected || req.fulfilled) {
+
+        } else {
+            let requester = await contract.accounts(req.requestSender);
+            requester = requester.username;
+            let ticker = req.ticker;
+            let amount = parseInt(req.amount._hex);
+            let memo = req.memo;
+            let obj = {
+                Requester: requester,
+                Ticker: ticker,
+                Amount: amount / 10**18,
+                Reason: memo,
+                ID: reqIds[i]
+            };
+            result.push(obj);
+        }
+    }
+    return JSON.stringify(result);
+
+
 }
 
 function hide(element)  {  
