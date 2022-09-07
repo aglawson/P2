@@ -4,12 +4,10 @@ const contractAddress = '0xce6b410e8988AB85672e88E7e7cA4EC622980075';
 const contract = new ethers.Contract(contractAddress, abi, provider);
 hide('ca');
 hide('accountInfo');
+hide('deposit');
+hide('send');
 
 init = async function () {
-    hide('accountInfo');
-
-    // hide('buy');
-    // hide('sell');
     await provider.send("eth_requestAccounts", []);
 
     signer = await provider.getSigner()
@@ -22,8 +20,13 @@ init = async function () {
     let balance = await contract.tokenBalance('ETH', username.username);
 
     if(username.hasAccount){
+        unhide('accountInfo');
         document.getElementById('connect').innerHTML = username.username;
         document.getElementById('accountInfo').innerHTML = 'ETH Balance: ' + balance / 10**18;
+        unhide('deposit');
+        if(balance != 0) {
+            unhide('send');
+        }
     } else {
         document.getElementById('connect').innerHTML = 'Connected!';
         unhide('ca');
