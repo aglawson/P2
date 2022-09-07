@@ -6,6 +6,8 @@ hide('ca');
 // hide('accountInfo');
 hide('deposit');
 hide('send');
+hide('friends');
+hide('requests');
 
 init = async function () {
     await provider.send("eth_requestAccounts", []);
@@ -21,12 +23,13 @@ init = async function () {
 
 
     if(username.hasAccount){
-        //unhide('accountInfo');
         document.getElementById('connect').innerHTML = username.username;
         document.getElementById('un').innerHTML = username.username;
         document.getElementById('balance').innerHTML = 'ETH Balance: ' + balance / 10**18;
         document.getElementById('requests').innerHTML = await getPendingRequests();
         unhide('deposit');
+        unhide('friends');
+        unhide('requests');
         if(balance != 0) {
             unhide('send');
         } else {
