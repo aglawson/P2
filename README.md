@@ -11,7 +11,7 @@ https://aglawson.github.io/P2/
 2. Add ability to add users as 'friends' who can request payments (similar to venmo) **done**
 3. Remove USD conversions (to make #1 more smooth) **done**
 4. Test profusely *In Progress*
-5. Simple frontend to visualize functionality *In Progress*
+5. Simple frontend to visualize functionality **Done**
 
 ## Latest Test Results
 ```
