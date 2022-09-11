@@ -16,30 +16,30 @@ https://aglawson.github.io/P2/
 ## Latest Test Results
 ```
     Deployment
-      ✔ initializes ETH token at deployment (40ms)
+      ✔ initializes BASE token at deployment
     Account Functionality
-      ✔ can create new accounts (62ms)
-      ✔ users can add friends (55ms)
-      ✔ can deposit funds (42ms)
-      ✔ can request funds from friends (44ms)
-      ✔ can fulfill requests (55ms)
-      ✔ user can reject request (61ms)
-      ✔ can send funds (78ms)
-      ✔ user can withdraw funds (62ms)
+      ✔ can create new accounts
+      ✔ users can add friends (74ms)
+      ✔ can deposit funds
+      ✔ can request funds from friends (41ms)
+      ✔ can fulfill requests (47ms)
+      ✔ user can reject request (49ms)
+      ✔ can send funds (59ms)
+      ✔ user can withdraw funds (46ms)
       ✔ user can remove friends
     ERC20 Functionality
       ✔ owner can add ERC20 token
-      ✔ user can deposit ERC20 token (89ms)
-      ✔ user can withdraw ERC20 (57ms)
+      ✔ user can deposit ERC20 token (74ms)
+      ✔ user can withdraw ERC20 (62ms)
     Security
-      ✔ only owner can add tokens (52ms)
+      ✔ only owner can add tokens (39ms)
       ✔ only friends can request money
       ✔ does not allow duplicate usernames
       ✔ does not allow same wallet to make multiple accounts
-      ✔ does not allow funds to be sent to non existent user
-      ✔ does not allow users to fulfill requests not sent to them (65ms)
-      ✔ does not allow a rejected request to be fulfilled (41ms)
-      ✔ does not allow a user to reject a request not sent to them (59ms)
+      ✔ does not allow funds to be sent to non existent user (38ms)
+      ✔ does not allow users to fulfill requests not sent to them (88ms)
+      ✔ does not allow a rejected request to be fulfilled (46ms)
+      ✔ does not allow a user to reject a request not sent to them (88ms)
 
 
   21 passing (2s)

@@ -3,12 +3,8 @@ pragma solidity ^0.8.9;
 import "../node_modules/openzeppelin-contracts/utils/ReentrancyGuard.sol";
 import "./Percentages.sol";
 import "./TokenManager.sol";
-
-// import "../node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "../node_modules/openzeppelin-contracts/token/ERC20/IERC20.sol";
-/*
-*   TO-DO: Vigorous testing
-*/
+
 contract Accounts is ReentrancyGuard, Percentages, TokenManager{
 
     event sent(string toUsername, string fromUsername, string ticker, uint256 amount, string memo);
@@ -56,14 +52,14 @@ contract Accounts is ReentrancyGuard, Percentages, TokenManager{
         emit accountCreated(_username, _msgSender());
     }
 
-    function depositETH() external payable nonReentrant isNotZero(msg.value) {
+    function depositBASE() external payable nonReentrant isNotZero(msg.value) {
         require(accounts[_msgSender()].hasAccount, "Sender has not created an account");
 
-        uint256 oldBalance = tokenBalances[_msgSender()]["ETH"];
+        uint256 oldBalance = tokenBalances[_msgSender()][BASE];
 
-        tokenBalances[_msgSender()]["ETH"] += msg.value;
+        tokenBalances[_msgSender()][BASE] += msg.value;
 
-        emit funded(accounts[_msgSender()].username, _msgSender(), msg.value, oldBalance, tokenBalances[_msgSender()]["ETH"]);
+        emit funded(accounts[_msgSender()].username, _msgSender(), msg.value, oldBalance, tokenBalances[_msgSender()][BASE]);
     }
 
     function depositERC20(string memory ticker, uint256 amount) external tokenExists(ticker) isNotZero(amount) {

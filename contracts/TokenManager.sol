@@ -5,6 +5,8 @@ import "../node_modules/openzeppelin-contracts/access/Ownable.sol";
 
 contract TokenManager is Ownable {
 
+    string BASE;
+
     event tokenAdded(string ticker, address tokenAddress);
     struct Token {
         string ticker;
