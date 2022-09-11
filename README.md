@@ -1,6 +1,6 @@
-# P2
-P2 is a web3 version of a peer to peer payment platform (think venmo, zelle, etc).
-P2 is more user friendly than just using the base layer of ETH to move value, because it relies on usernames rather than unreadable wallet addresses. 
+# ThreeZend
+ThreeZend is a web3 version of a peer to peer payment platform (think venmo, zelle, etc).
+ThreeZend is more user friendly than just using the base layer to move value, because it relies on usernames rather than unreadable wallet addresses. 
 
 # Frontend
 Goerli Testnet Only
@@ -11,7 +11,7 @@ https://aglawson.github.io/P2/
 2. Add ability to add users as 'friends' who can request payments (similar to venmo) **done**
 3. Remove USD conversions (to make #1 more smooth) **done**
 4. Test profusely *In Progress*
-5. Simple frontend to visualize functionality **Done**
+5. Simple frontend to visualize functionality **done**
 
 ## Latest Test Results
 ```
