@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("P2", function () {
+describe("Threezend", function () {
   this.beforeAll(async function() {
     const [owner, addr2, addr3, addr4, addr5] = await ethers.getSigners();
     this.owner = owner;
@@ -10,7 +10,7 @@ describe("P2", function () {
     this.addr4 = addr4;
     this.addr5 = addr5;
 
-    this.P2 = await ethers.getContractFactory("P2");
+    this.P2 = await ethers.getContractFactory("Threezend");
     this.p2 = await this.P2.deploy();
 
     this.TestToken = await ethers.getContractFactory("TestToken");

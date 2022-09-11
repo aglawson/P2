@@ -74,12 +74,9 @@ deposit = async function () {
         }
     } else {
         try {
-            const approved = await approve();
-            if(approved) {
-                const log = await contractSigner.depositERC20(ticker, amount.toString());
-            }
+            const log = await contractSigner.depositERC20(ticker, amount.toString());
         } catch(err) {
-            alert(err);
+            alert(err.error.message + ': may need to approve token spending first');
         }
     }
 }
@@ -118,15 +115,10 @@ withdraw = async function () {
 
     const amount = document.getElementById('amount').value * 10**18;
     const ticker = document.getElementById('ticker').value.toUpperCase();
-
-    if(ticker == 'ETH') {
-        try{
-            const log = await contractSigner.withdrawFunds(ticker, amount.toString());
-        } catch(err) {
-            alert(err.error.message);
-        }
-    } else {
-        alert('only ETH supported currently');
+    try{
+        const log = await contractSigner.withdrawFunds(ticker, amount.toString());
+    } catch(err) {
+        alert(err.error.message);
     }
 }
 
@@ -138,14 +130,10 @@ sendFunds = async function () {
     const memo = document.getElementById('memo').value;
 
     const toUsername = document.getElementById('toUsername').value;
-    if(ticker == 'ETH') {
-        try{
-            const log = await contractSigner.sendFunds(toUsername, 'ETH', amount.toString(), memo);
-        } catch(err) {
-            alert(err.error.message);
-        }
-    } else {
-        alert('only ETH supported currently');
+    try{
+        const log = await contractSigner.sendFunds(toUsername, ticker, amount.toString(), memo);
+    } catch(err) {
+        alert(err.error.message);
     }
 }
 

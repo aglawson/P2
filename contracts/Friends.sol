@@ -78,8 +78,4 @@ contract Friends is Accounts {
         reqs[reqId].rejected = true;
         emit requestRejected(reqId);
     }
-
-    function getRequests(ReqType _type) external view returns(uint256[] memory) {
-        return reqMapping[_msgSender()][uint256(_type)];
-    }
 }

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
-    <title>P2</title>
+    <title>ThreeZend</title>
     <button id="connect" style="margin-top:0%; margin-left:90%;" onclick="init()">Connect Wallet</button>
 
-    <h1 style="margin-top: -1.6%;">P2</h1>
+    <h1 style="margin-top: -1.6%;">ThreeZend</h1>
     <a href="https://github.com/aglawson/P2" target="_blank"><button>Source Code</button></a>
 
   </head>
@@ -29,6 +29,7 @@
         <h2>Deposit & Withdraw</h2>
         <input type="text" id="ticker" placeholder="ticker">
         <input type="number" id="amount" placeholder="amount">
+        <button onclick="approve()">Approve</button>
         <button id="depositFunds" onclick="deposit()">Deposit</button>
         <button id="withdraw" onclick="withdraw()">Withdraw</button>
     </div>
