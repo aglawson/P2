@@ -1,3 +1,5 @@
+## NOTE: Feel free to improve frontend, I know it is horrendous.
+
 # ThreeZend
 ThreeZend is a web3 version of a peer to peer payment platform (think venmo, zelle, etc).
 ThreeZend is more user friendly than just using the base layer to move value, because it relies on usernames rather than unreadable wallet addresses. 
