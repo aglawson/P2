@@ -134,6 +134,10 @@ describe("Threezend", function () {
       await this.p2.connect(this.owner).requestFunds('HeadlessDev', BASE, '10000000000000000', 'again again');
       await expect(this.p2.connect(this.addr2)['rejectRequest(uint256)'](2)).to.be.revertedWith('Sender is not request recipient');
     });
+
+    it('does not allow non-owner to transfer ownership', async function () {
+      await expect(this.p2.connect(this.addr2)['transferOwnership(address)'](this.addr2.address)).to.be.revertedWith('Ownable: caller is not the owner');
+    })
   });
  
 });

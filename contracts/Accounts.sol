@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-import "../node_modules/openzeppelin-contracts/utils/ReentrancyGuard.sol";
+import "./ReentrancyGuard.sol";
 import "./Percentages.sol";
 import "./TokenManager.sol";
-import "../node_modules/openzeppelin-contracts/token/ERC20/IERC20.sol";
+import "./IERC20.sol";
 
 contract Accounts is ReentrancyGuard, Percentages, TokenManager{
 

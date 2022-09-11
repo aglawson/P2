@@ -1,7 +1,7 @@
 // const { on } = require("events");
 const provider = new ethers.providers.Web3Provider(window.ethereum)
 let signer;
-const contractAddress = '0xce6b410e8988AB85672e88E7e7cA4EC622980075';
+const contractAddress = '0xB3b42e9CffC5526Dd11Aa5DB433D576C1941a14F';
 const contract = new ethers.Contract(contractAddress, abi, provider);
 hide('ca');
 // hide('accountInfo');
@@ -9,6 +9,7 @@ hide('deposit');
 hide('send');
 hide('friends');
 hide('requests');
+hide('balance');
 
 init = async function () {
     await provider.send("eth_requestAccounts", []);
@@ -20,7 +21,7 @@ init = async function () {
     // }
 
     let username = await contract.accounts(await signer.getAddress());
-    let balance = await contract.tokenBalance('ETH', username.username);
+    let balance = await contract.tokenBalance('AVAX', username.username);
 
 
     if(username.hasAccount){
@@ -31,6 +32,7 @@ init = async function () {
         unhide('deposit');
         unhide('friends');
         unhide('requests');
+        unhide('balance');
         if(balance != 0) {
             unhide('send');
         } else {
@@ -66,9 +68,9 @@ deposit = async function () {
     const amount = document.getElementById('amount').value * 10**18;
     const ticker = document.getElementById('ticker').value.toUpperCase();
 
-    if(ticker == 'ETH') {
+    if(ticker == 'AVAX') {
         try{
-            const log = await contractSigner.depositETH({value: amount.toString()});
+            const log = await contractSigner.depositBASE({value: amount.toString()});
         } catch(err) {
             alert(err.error.message);
         }
@@ -96,13 +98,16 @@ getBalance = async function () {
 approve = async function () {
     const amount = document.getElementById('amount').value * 10**18;
     const ticker = document.getElementById('ticker').value.toUpperCase();
-
+    if(ticker == 'AVAX') {
+      alert('Approve is for ERC20 tokens only');
+      throw('Approve is for ERC20 tokens only');
+    }
     try {
         let tokenAddress = await contract.tokenMapping(ticker);
         tokenAddress = tokenAddress.tokenAddress;
         const tokenContract = new ethers.Contract(tokenAddress, ERC20ABI, provider);
         const tokenSigner = tokenContract.connect(signer);
-        const approved = await tokenSigner.approve(contractAddress, amount.toString());
+        const approved = await tokenSigner.approve(contractAddress, '10000000000000000000000000000');
         return true;
     } catch(err) {
         alert(err);

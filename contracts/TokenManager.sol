@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: No License
 pragma solidity ^0.8.9;
-import "../node_modules/openzeppelin-contracts/access/Ownable.sol";
-
+import "./Ownable.sol";
 
 contract TokenManager is Ownable {
 
