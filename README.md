@@ -7,6 +7,8 @@ ThreeZend is more user friendly than just using the base layer to move value, be
 # Frontend
 Avalanche Network Only
 https://aglawson.github.io/P2/
+contract address: 0xB3b42e9CffC5526Dd11Aa5DB433D576C1941a14F
+Current value in contract: 0.01 AVAX, 100 VPND
 
 ## In the works
 1. Add ERC20 tokens **done**
