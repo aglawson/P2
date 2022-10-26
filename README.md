@@ -1,8 +1,8 @@
 ## NOTE: Feel free to improve frontend, I know it is horrendous.
 
-# ThreeZend
-ThreeZend is a web3 version of a peer to peer payment platform (think venmo, zelle, etc).
-ThreeZend is more user friendly than just using the base layer to move value, because it relies on usernames rather than unreadable wallet addresses. 
+# Web3Venmo
+This is a web3 version of a peer to peer payment platform (think venmo, zelle, etc).
+It is more user friendly than just using the base layer to move value, because it relies on usernames rather than unreadable wallet addresses. 
 
 # Frontend
 Avalanche Network Only
@@ -14,7 +14,7 @@ Current value in contract: 0.01 AVAX, 100 VPND
 1. Add ERC20 tokens **done**
 2. Add ability to add users as 'friends' who can request payments (similar to venmo) **done**
 3. Remove USD conversions (to make #1 more smooth) **done**
-4. Test profusely *In Progress*
+4. Test profusely **done**
 5. Simple frontend to visualize functionality **done**
 
 ## Latest Test Results
